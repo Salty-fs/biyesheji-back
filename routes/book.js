@@ -80,5 +80,13 @@ router.post('/createbook', async (req, res) => {
     // res.send(booklist)
 })
 
+router.post('/deletebook', async (req, res) => {
+    await Book.destroy({
+        where: {
+            bid: req.body.bid
+        }
+    })
+    // res.send(booklist)
+})
 
 module.exports = router;

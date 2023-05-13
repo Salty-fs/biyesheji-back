@@ -48,4 +48,39 @@ router.get('/getBookChapterInfo', async (req, res) => {
 
 })
 
+//新增chapter
+router.post('/new', async (req, res) => {
+    const chapter = await Chapter.create({
+        name: req.body.name,
+        bid: req.body.bid,
+        list: req.body.list,
+        info: req.body.info,
+        // time: Date.now()
+    })
+    res.send(chapter)
+})
+
+router.post('/update', async (req, res) => {
+    const chapter = await Chapter.update({
+        name: req.body.name,
+        info: req.body.info,
+    },{
+        where: {
+            list: req.body.list,
+            bid: req.body.bid
+        }
+    })
+    res.send(chapter)
+})
+
+router.post('/delete', async (req, res) => {
+    await Chapter.destroy({
+        where: {
+          bid: req.body.bid,
+          list: req.body.list
+        }
+    });
+    // res.sendStatus(chapter)
+})
+
 module.exports = router;

@@ -32,4 +32,12 @@ router.post('/new', async (req, res) => {
     res.send(command)
 })
 
+router.post('/delete', async (req, res) => {
+    await Command.destroy({
+        where: {
+          cid: req.body.cid
+        }
+    });
+    // res.sendStatus(chapter)
+})
 module.exports = router;
