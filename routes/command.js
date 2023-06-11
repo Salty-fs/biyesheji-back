@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 const Command = require('../models/command')
 const User = require('../models/user')
-const { Op } = require('sequelize');
+const Book = require('../models/book')
+const { Op, fn, col } = require('sequelize');
 const sequelize = require('../db/db')
 
 // User.hasMany(Command)
@@ -27,7 +28,18 @@ router.post('/new', async (req, res) => {
         command: req.body.value,
         // time: Date.now()
     })
-    // console.log(results)
+    const avagescore = await Command.findOne({
+        attributes: [[fn('AVG', col('score')),'avg']],
+        where: {
+            bid: req.body.bid
+        } 
+    });
+    await Book.update({ score: Number(avagescore.dataValues.avg).toFixed(1) },{
+        where: {
+            bid: req.body.bid
+        } 
+    });
+    // console.log(avagescore.dataValues.avg)
 
     res.send(command)
 })

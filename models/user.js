@@ -24,7 +24,7 @@ User.init({
     },
     time: {
       type: Sequelize.INTEGER,
-      allowNull: true,
+      allowNull: false,
       field: 'time',
       defaultValue: 0
     }
